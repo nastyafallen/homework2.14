@@ -26,9 +26,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public String add(String item) {
-        if (Objects.isNull(item)) {
-            throw new IllegalArgumentException("Ввод некорректных данных!");
-        }
+        checkForNull(item);
         if (capacity >= arrayList.length) {
             throw new MyIllegalArgumentException("Превышение допустимых размеров массива!");
         }
@@ -38,9 +36,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public String add(int index, String item) {
-        if (Objects.isNull(item)) {
-            throw new IllegalArgumentException("Ввод некорректных данных!");
-        }
+        checkForNull(item);
         if (index < 0 || index > capacity) {
             throw new MyIllegalArgumentException("Ввод некорректных данных!");
         }
@@ -95,9 +91,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public boolean contains(String item) {
-        if (Objects.isNull(item)) {
-            throw new IllegalArgumentException("Ввод некорректных данных!");
-        }
+        checkForNull(item);
         for (int i = 0; i < capacity; i++) {
             if (Objects.equals(item, arrayList[i])) {
                 return true;
@@ -108,9 +102,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public int indexOf(String item) {
-        if (Objects.isNull(item)) {
-            throw new IllegalArgumentException("Ввод некорректных данных!");
-        }
+        checkForNull(item);
         int indexOfItem = -1;
         for (int i = 0; i < capacity; i++) {
             if (Objects.equals(item, arrayList[i])) {
@@ -123,9 +115,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public int lastIndexOf(String item) {
-        if (Objects.isNull(item)) {
-            throw new IllegalArgumentException("Ввод некорректных данных!");
-        }
+        checkForNull(item);
         int indexOfItem = -1;
         for (int i = capacity-1; i >= 0; i--) {
             if (Objects.equals(item, arrayList[i])) {
@@ -180,6 +170,16 @@ public class StringListImpl implements StringList {
 
     @Override
     public String[] toArray() {
-        return new String[0];
+        String[] result = new String[capacity];
+        for (int i = 0; i < capacity; i++) {
+            result[i] = arrayList[i];
+        }
+        return result;
+    }
+
+    public void checkForNull(String s) throws IllegalArgumentException{
+        if (Objects.isNull(s)) {
+            throw new IllegalArgumentException("Ввод некорректных данных!");
+        }
     }
 }
